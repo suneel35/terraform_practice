@@ -1,0 +1,52 @@
+provider "aws" {
+  region     = "us-west-2"
+  access_key = "AKIATJTVDTJNLF5I5SXW"
+  secret_key = "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"
+  #version    = "~> 2.7"
+ }
+/*
+resource "aws_instance" "suneel" {
+  ami           = "ami-00ee4df451840fa9d" # us-west-2
+  instance_type = "t2.medium"
+  #instance_type = var.list[0]
+  }
+
+resource "aws_instance" "suneel-2" {
+    ami           = "ami-00ee4df451840fa9d" # us-west-2
+    instance_type = "t2.medium"
+        #instance_type = var.list[0]
+    }
+*/
+/*
+resource "aws_instance" "suneel" {
+  ami           = "ami-00ee4df451840fa9d" # us-west-2
+  instance_type = "t2.medium"
+  count=5
+  #instance_type = var.list[0]
+  }
+*/
+/* #overcome name understanding below code
+resource "aws_iam_user" "suneel" {
+  name = "suresh"
+  path = "/system"
+  count=5
+  #instance_type = var.list[0]
+}
+*/
+/*
+resource "aws_iam_user" "suneel" {
+  name = "suresh.${count.index}"
+  path = "/system"
+  count=5
+
+}
+*/
+variable "elb_names" {
+  type = list
+  default = ["dev-lb","stage-lb","prod-lb"]
+}
+resource "aws_iam_user" "lb" {
+  name = var.elb_names[count.index]
+  path = "/system"
+  count = 3
+}

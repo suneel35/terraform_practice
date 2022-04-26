@@ -1,0 +1,20 @@
+provider "aws" {
+  #region     = "us-west-2"
+  region     = "ap-south-1"
+  access_key = "AKIATJTVDTJNLF5I5SXW"
+  secret_key = "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"
+  #version    = "~> 2.7"
+ }
+
+data "aws_ami" "app_ami"{
+  most_recent = "true"
+  owners = ["amazon"]
+filter {
+  name = "name"
+  values = ["amzn2-ami-hvm*"]
+}
+}
+ resource "aws_instance" "dev" {
+   ami           = data.aws_ami.app_ami.id # us-west-2
+   instance_type = "t2.nano"
+   }

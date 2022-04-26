@@ -1,0 +1,44 @@
+provider "aws" {
+  region     = var.region
+  access_key = "AKIATJTVDTJNLF5I5SXW"
+  secret_key = "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"
+  #version    = "~> 2.7"
+ }
+
+variable "region" {
+  default = "us-west-2"
+}
+
+variable "ami" {
+  type = map
+  default = {
+    us-west-2 = "ami-00ee4df451840fa9d"
+    ap-south-1 = "ami-00ee4df451840fa9d"
+    us-west-1 ="ami-00ee4df451840fa9d"
+  }
+}
+variable "tags" {
+  type = list
+  default = ["firstec2","secondec2"]
+  }
+resource "aws_key_pair" "loginkey" {
+  key_name = "loginkey"
+  public_key=file("${path.module}/id_rsa.pub")
+
+}
+ resource "aws_instance" "dev" {
+   ami = lookup(var.ami,var.region)
+   instance_type = "t2.nano"
+   key_name = aws_key_pair.loginkey.key_name
+   count = 2
+   tags = {
+     Name = element(var.tags,count.index)
+   }
+   }
+
+  resource "aws_instance" "prod" {
+    ami = lookup(var.ami,var.region)
+     instance_type = "t2.medium"
+     key_name = aws_key_pair.loginkey.key_name
+
+     }
