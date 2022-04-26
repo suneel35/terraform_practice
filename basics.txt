@@ -1,0 +1,8 @@
+terraform init : install dependencies and packages
+terraform plan : checking which one creating for that
+terraform apply:  after apply created resources and one more is every 10s its showing status
+terraform destroy: first check the resources 
+/* --> commented its assumes destroyed
+terraform tfstate file its store the details of resources data
+ 
+Desired state and current state
